@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -40,7 +41,7 @@ public class Movement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground") && !isGrounded)
+        if ((collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Ground")) && !isGrounded)
         {
             isGrounded = true;
         }
@@ -48,9 +49,9 @@ public class Movement : MonoBehaviour
     
     private void OnCollisionExit2D(Collision2D collision)
     {
-        // if (collision.gameObject.CompareTag("Ground"))
-        // {
-        //     isGrounded = false;
-        // }
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
     }
 }
