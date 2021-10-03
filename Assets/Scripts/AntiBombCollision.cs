@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class AntiBombCollision : MonoBehaviour
 {
-	private bool isExploding;
-	private GameObject player;
+	private bool isDestroying;
 	private SpriteRenderer sprite;
 
 	private void Start()
@@ -12,7 +11,7 @@ public class AntiBombCollision : MonoBehaviour
 	}
 	private void Update()
 	{
-		if (isExploding)
+		if (isDestroying)
 		{
 			Color current = sprite.color;
 			current.a -= 5f * Time.deltaTime;
@@ -20,12 +19,6 @@ public class AntiBombCollision : MonoBehaviour
 
 			if (current.a < 0.05f)
 			{
-				Vector2 direction = transform.position - player.transform.position;
-				if (direction.magnitude < 5f)
-				{
-					player.GetComponent<Rigidbody2D>().AddForce(direction.normalized * 25f, ForceMode2D.Impulse);
-					player.GetComponent<Movement>().isGrounded = false;
-				}
 				Destroy(gameObject);
 			}
 		}
@@ -35,8 +28,7 @@ public class AntiBombCollision : MonoBehaviour
 	{
 		if (collision.gameObject.CompareTag("Player"))
 		{
-			isExploding = true;
-			player = collision.gameObject;
+			isDestroying = true;
 		}
 	}
 }

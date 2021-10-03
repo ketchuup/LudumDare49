@@ -44,6 +44,10 @@ public class Movement : MonoBehaviour
         {
             isGrounded = true;
         }
+        else if (collision.gameObject.CompareTag("Hurting"))
+        {
+            Destroy(gameObject);
+        }
     }
     
     private void OnCollisionExit2D(Collision2D collision)
@@ -51,6 +55,15 @@ public class Movement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collider)
+    {
+        if (collider.gameObject.CompareTag("Field"))
+        {
+            Vector2 direction = transform.position - collider.gameObject.transform.position;
+            rigidbody.AddForce(-direction.normalized * 0.5f, ForceMode2D.Impulse);
         }
     }
 }

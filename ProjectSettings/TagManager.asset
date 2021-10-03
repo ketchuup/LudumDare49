@@ -8,6 +8,8 @@ TagManager:
   - Platform
   - Bomb
   - AntiBomb
+  - Hurting
+  - Field
   layers:
   - Default
   - TransparentFX
