@@ -10,6 +10,7 @@ public class AddAntiBomb : MonoBehaviour
         {
             --available.value;
             Instantiate(prefab, Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 10)), Quaternion.identity);
+            GameObject.Find("SoundEffects/Place").GetComponent<AudioSource>().Play();
         }
     }
 }

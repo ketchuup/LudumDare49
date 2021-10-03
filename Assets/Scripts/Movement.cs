@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class Movement : MonoBehaviour
 {
@@ -11,10 +12,13 @@ public class Movement : MonoBehaviour
     private Rigidbody2D rigidbody;
     private float horizontalInput;
     public bool isGrounded = true;
+    private bool isDying;
 
+    private AudioSource jumpSound;
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        jumpSound = GameObject.Find("SoundEffects/Jump").GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -26,6 +30,12 @@ public class Movement : MonoBehaviour
         {
             rigidbody.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
             isGrounded = false;
+
+            if (!jumpSound.isPlaying)
+            {
+                jumpSound.pitch = Random.Range(0.9f, 1.1f);
+                jumpSound.Play();
+            }
         }
         
         if (Input.GetButtonDown("Slow"))
@@ -37,6 +47,14 @@ public class Movement : MonoBehaviour
         {
             rigidbody.velocity = new Vector2(maxSpeed * Mathf.Sign(rigidbody.velocity.x), rigidbody.velocity.y);
         }
+
+        if (isDying)
+        {
+            transform.localScale -= new Vector3(Time.deltaTime, Time.deltaTime, 0);
+            Color current = GetComponent<SpriteRenderer>().color;
+            current.a -= 6f * Time.deltaTime;
+            GetComponent<SpriteRenderer>().color = current;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -47,7 +65,13 @@ public class Movement : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Hurting"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().path);
+            AudioSource sound = GameObject.Find("SoundEffects/Hit").GetComponent<AudioSource>();
+            sound.Play();
+            isDying = true;
+            var shaking = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+            shaking.enabled = true;
+            shaking.shakeDuration = sound.clip.length;
+            Invoke("reloadScene", sound.clip.length);
         }
     }
     
@@ -66,5 +90,10 @@ public class Movement : MonoBehaviour
             Vector2 direction = transform.position - collider.gameObject.transform.position;
             rigidbody.AddForce(-direction.normalized * 0.5f, ForceMode2D.Impulse);
         }
+    }
+
+    private void reloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().path);
     }
 }

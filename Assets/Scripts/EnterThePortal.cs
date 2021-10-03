@@ -10,7 +10,15 @@ public class EnterThePortal : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene(next);
+            AudioSource sound = GameObject.Find("SoundEffects/Portal").GetComponent<AudioSource>();
+            sound.Play();
+            Invoke("goToNextScene", sound.clip.length);
+            Destroy(collision.gameObject);
         }
+    }
+
+    private void goToNextScene()
+    {
+        SceneManager.LoadScene(next);
     }
 }
