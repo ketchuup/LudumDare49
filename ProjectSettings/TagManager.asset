@@ -54,3 +54,9 @@ TagManager:
   - name: Platforms
     uniqueID: 2889335475
     locked: 0
+  - name: Hints
+    uniqueID: 1408847505
+    locked: 0
+  - name: Player
+    uniqueID: 1565351537
+    locked: 0

@@ -1,10 +1,13 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class Movement : MonoBehaviour
 {
+    private static int attempts = 1;
+    
     public float maxSpeed = 10f;
     public float jumpHeight = 10f;
     public float slowingDownCoefficient = 1f;
@@ -95,5 +98,11 @@ public class Movement : MonoBehaviour
     private void reloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().path);
+        ++attempts;
+    }
+
+    public int GetAttempts()
+    {
+        return attempts;
     }
 }
