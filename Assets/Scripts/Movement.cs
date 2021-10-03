@@ -1,5 +1,4 @@
 using System;
-using UnityEditor;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -10,7 +9,7 @@ public class Movement : MonoBehaviour
     
     private Rigidbody2D rigidbody;
     private float horizontalInput;
-    private bool isGrounded = true;
+    public bool isGrounded = true;
 
     private void Start()
     {
@@ -41,7 +40,7 @@ public class Movement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if ((collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Ground")) && !isGrounded)
+        if ((collision.gameObject.CompareTag("AntiBomb") || collision.gameObject.CompareTag("Bomb") || collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Ground")) && !isGrounded)
         {
             isGrounded = true;
         }

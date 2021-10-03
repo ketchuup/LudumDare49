@@ -1,16 +1,16 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AvailablePlatforms : MonoBehaviour
+public class Counter : MonoBehaviour
 {
-	public Image platform;
+	public Image icon;
 	public Number available;
 
 	public Vector2 padding;
 	public float size;
 	public float spacing;
+	public bool onLeft;
 	
 	private List<Image> images;
 	
@@ -20,7 +20,18 @@ public class AvailablePlatforms : MonoBehaviour
 		
 		for (int i = 0; i < available.value; ++i)
 		{
-			Image image = Instantiate(platform, padding + new Vector2(i * (size + spacing), 0), Quaternion.identity);
+			Vector2 offset = Vector2.zero;
+			
+			if (onLeft)
+			{
+				offset = new Vector2(i * (size + spacing), 0);
+			}
+			else
+			{
+				offset = new Vector2(-i * (size + spacing), 0);
+			}
+			
+			Image image = Instantiate(icon, padding + offset, Quaternion.identity);
 			image.transform.SetParent(transform, false);
 			images.Add(image);
 		}
