@@ -15,7 +15,7 @@ public class BombCollision : MonoBehaviour
         if (isExploding)
         {
             Color current = sprite.color;
-            current.a -= 2f * Time.deltaTime;
+            current.a -= 5f * Time.deltaTime;
             sprite.color = current;
 
             if (current.a < 0.05f)

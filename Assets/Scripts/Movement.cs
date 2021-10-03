@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
@@ -46,7 +47,7 @@ public class Movement : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Hurting"))
         {
-            Destroy(gameObject);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().path);
         }
     }
     

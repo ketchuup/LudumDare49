@@ -15,7 +15,7 @@ public class PlatformCollision : MonoBehaviour
       if (isDespawning)
       {
          Color current = sprite.color;
-         current.a -= 1.5f * Time.deltaTime;
+         current.a -= 3f * Time.deltaTime;
          sprite.color = current;
 
          if (current.a < 0.05f)

@@ -10,6 +10,7 @@ TagManager:
   - AntiBomb
   - Hurting
   - Field
+  - Portal
   layers:
   - Default
   - TransparentFX
